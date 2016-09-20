@@ -17,6 +17,15 @@ defmodule WikiSearch.CLI do
     end
   end
 
+  def process(:help) do
+    IO.puts """
+    WikiSearch
+    ----------
+    usage: wiki_search <search_term>
+    example: wiki_search lion
+    """
+  end
+
   def process({search_term}) do
     IO.puts search_term
   end
