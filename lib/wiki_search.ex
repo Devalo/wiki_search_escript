@@ -1,0 +1,2 @@
+defmodule WikiSearch do
+end
