@@ -5,6 +5,8 @@ defmodule WikiSearch.Mixfile do
     [app: :wiki_search,
      version: "0.1.0",
      elixir: "~> 1.3",
+     description: description(),
+     package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      escript: [main_module: WikiSearch.CLI],
@@ -18,6 +20,8 @@ defmodule WikiSearch.Mixfile do
     [applications: [:logger, :httpoison]]
   end
 
+
+
   # Dependencies can be Hex packages:
   #
   #   {:mydep, "~> 0.3.0"}
@@ -30,5 +34,18 @@ defmodule WikiSearch.Mixfile do
   defp deps do
     [{:httpoison, "~> 0.9.0"},
      {:poison, "~> 2.0"}]
+  end
+
+  defp description do
+    """
+    Retrives Wikipedia articles as a string
+    """
+  end
+
+  defp package do
+    [name: :wiki_search,
+     maintainers: ["Stephan Bakkelund Valois"],
+     links: %{"Github" => "https://github.com/Devalo/wiki_search_escript"}]
+
   end
 end
