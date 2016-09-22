@@ -33,7 +33,8 @@ defmodule WikiSearch.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:httpoison, "~> 0.9.0"},
-     {:poison, "~> 2.0"}]
+     {:poison, "~> 2.0"},
+     {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
   defp description do
@@ -45,6 +46,7 @@ defmodule WikiSearch.Mixfile do
   defp package do
     [name: :wiki_search,
      maintainers: ["Stephan Bakkelund Valois"],
+     licenses: ["None"],
      links: %{"Github" => "https://github.com/Devalo/wiki_search_escript"}]
 
   end

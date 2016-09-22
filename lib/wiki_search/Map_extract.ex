@@ -11,7 +11,7 @@ defmodule WikiSearch.MapExtract do
                       end
                     end)
 
-    {_, extract_search_term_content = pages_number
+    {_, extract_search_term_content} = pages_number
     Map.fetch!(extract_search_term_content, "extract")
   end
 end
