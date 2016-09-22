@@ -4,7 +4,6 @@ defmodule WikiSearch.CLI do
   def main(args) do
     parse_args(args)
     |> process
-    |> extract_from_body
   end
 
   def parse_args(args) do
@@ -29,20 +28,26 @@ defmodule WikiSearch.CLI do
 
   def process({search_term}) do
     WikiSearch.SearchEngine.fetch(search_term)
+    |> extract_from_body
   end
 
   def decode_response({:ok, body}), do: IO.puts is_list(body)
-  def decode_response({:error, error}) do
+  def decode_response({:error, _error}) do
     IO.puts "Error fetching search term"
   end
 
   def extract_from_body(map) do
-    case map do
-      {_, map_body} ->
-      IO.inspect  Map.keys(map_body)
-      IO.inspect Map.has_key?(map_body, "query")
-      IO.inspect Map.get(map_body, "query")
-    end
+      {_, map_body} = map
+      map_query = get_in(map_body, ["query"])
+      pages_query = get_in(map_query, ["pages"])
+      pages_number = Enum.find(pages_query, fn {k, _v} ->
+                      case Integer.parse(k) do
+                        :error -> false
+                        _ -> k
+                        end
+                      end)
+    {_, extract_body} = pages_number
+    IO.inspect Map.fetch!(extract_body, "extract")
   end
 
 
