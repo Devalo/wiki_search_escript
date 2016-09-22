@@ -27,32 +27,17 @@ defmodule WikiSearch.CLI do
   end
 
   def process({search_term}) do
-    WikiSearch.SearchEngine.fetch(search_term)
-    |> extract_from_body
+    WikiSearch.Search.fetch(search_term)
+    |> WikiSearch.MapExtract.extract_from_body
+    |> string_format
   end
 
-  def decode_response({:ok, body}), do: IO.puts is_list(body)
-  def decode_response({:error, _error}) do
-    IO.puts "Error fetching search term"
-  end
+  def string_format(string) do
+    String.replace(string, ". ", ". \n")
+    |> IO.puts
 
-  def extract_from_body(map) do
-      {_, map_body} = map
-      map_query = get_in(map_body, ["query"])
-      pages_query = get_in(map_query, ["pages"])
-      pages_number = Enum.find(pages_query, fn {k, _v} ->
-                      case Integer.parse(k) do
-                        :error -> false
-                        _ -> k
-                        end
-                      end)
-    {_, extract_body} = pages_number
-    IO.inspect Map.fetch!(extract_body, "extract")
   end
 
 
-  def hale_json({:ok, %{status_code: 200, body: body}}) do
-    {:ok, Poison.Parser.parse!(body)}
-  end
 
 end
